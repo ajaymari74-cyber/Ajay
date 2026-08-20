@@ -27,6 +27,8 @@ const COMMANDS = [
     ]
   },
   {
+    category: 'Actions',
+    items: [
       { id: 'act-theme', title: 'Toggle Theme (Dark / Light)', icon: '🎨', action: (notify, toggleTheme, theme) => { if (toggleTheme) toggleTheme(); if (notify) notify(`Switched to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`); }, shortcut: 'T' },
       { id: 'act-resume', title: 'Download Resume (PDF)', icon: '📄', action: () => window.open('/assets/Ajay%20M-Junior%20Software%20Developer.pdf', '_blank') },
       { id: 'act-email', title: 'Copy Email (ajaymari74@gmail.com)', icon: '✉️', action: (notify) => copyToClipboard('ajaymari74@gmail.com', 'Email copied to clipboard!', notify) },
