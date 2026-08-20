@@ -1,11 +1,28 @@
 /**
- * Skills Section — 2026 Quantum Bento UI
- * Zero Progress Bars · Official SVG Logos · Glassmorphism
+ * Skills.jsx — 2026 Quantum Bento Technical Arsenal
+ * Java Full Stack, PHP/MySQL, MERN, Flutter & Spring Framework
  */
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-/* ── Official Brand SVG Icons ── */
+/* ── Crisp Official Brand SVG Logos ── */
 const Icons = {
+  Java: (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18.5 32.5c4.5.3 8.5-.8 11.5-2.2-2.5 1.5-7 2.5-11.5 2.2z" fill="#5382A1"/>
+      <path d="M14.5 28.5c5.5.4 10.5-.7 14.5-2-3 1.3-8.5 2.2-14.5 2z" fill="#E76F00"/>
+      <path d="M22.5 19c2 2.2 1.5 4.5-2 6.5 4-1 6.5-3.5 5.5-6.5-1-2.5-3.5-3.5-3.5-3.5s2.5 1.5 0 3.5z" fill="#5382A1"/>
+      <path d="M18 10c2.5 2.5 2 4.5-2 7 4.5-1.5 7-4.5 5.5-7.5-1.5-3-3.5-4-3.5-4s2.5 2 0 4.5z" fill="#E76F00"/>
+      <text x="20" y="27" textAnchor="middle" fill="#5382A1" fontSize="11" fontWeight="bold" fontFamily="sans-serif">JAVA</text>
+    </svg>
+  ),
+  Spring: (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="40" height="40" rx="8" fill="#6DB33F" fillOpacity="0.15"/>
+      <path d="M20 7L8 14v12l12 7 12-7V14L20 7z" stroke="#6DB33F" strokeWidth="2" fill="none"/>
+      <path d="M28 17c-2 6-11 4-12 12-1 4 3 6 7 5 5-1 7-7 5-12" stroke="#6DB33F" strokeWidth="2" strokeLinecap="round" fill="none"/>
+    </svg>
+  ),
   React: (
     <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="20" cy="20" r="3.2" fill="#61DAFB"/>
@@ -37,6 +54,13 @@ const Icons = {
       <ellipse cx="20" cy="26" rx="13" ry="5" fill="#4479A1" opacity="0.7"/>
     </svg>
   ),
+  MongoDB: (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="40" height="40" rx="8" fill="#47A248" fillOpacity="0.12"/>
+      <path d="M20 6s-6 5-6 12c0 6 5 9 6 15 1-6 6-9 6-15 0-7-6-12-6-12z" fill="#47A248"/>
+      <path d="M20 6v27c1-6 6-9 6-15 0-7-6-12-6-12z" fill="#4EA94B"/>
+    </svg>
+  ),
   Flutter: (
     <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M22 4L7 19l6.5 6.5L35 4H22z" fill="#54C5F8"/>
@@ -58,29 +82,10 @@ const Icons = {
       <path d="M23 27.5c0 2.4 1.2 3.5 3 3.5s3.2-1.1 3.2-3.6V18h-3v9c0 1-.3 1.5-1.2 1.5s-1.2-.5-1.2-1.5L23 27.5zm-9.5.5c.5 2.5 1.8 3.5 4.5 3.5s4.5-1.5 4.5-4.5c0-2.5-1.2-3.6-3.7-4.4-2.2-.7-2.8-1-2.8-2.2 0-.8.5-1.2 1.5-1.2.8 0 1.5.4 1.8 1.8h3c-.3-2.8-1.8-4.5-4.8-4.5s-4.5 1.7-4.5 4.3c0 2.6 1.2 3.6 3.6 4.3 2.1.7 2.8 1.2 2.8 2.3 0 1-.7 1.5-1.7 1.5-1.3 0-2-.7-2.3-1.9h-3z" fill="#1a1a1a"/>
     </svg>
   ),
-  HTML5: (
-    <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-      <path d="M7 4l2.5 28L20 36l10.5-4L33 4H7z" fill="#E34F26"/>
-      <path d="M20 33.5V7.5H10l2.2 24.5L20 33.5z" fill="#EF652A"/>
-      <path d="M14 22h6l.5 5.5-3.5.9-3.5-.9-.3-3.5H10l.6 7.5L20 34v-3.5l-4.5-1.5L15.2 25H14v-3zm0-8h6.4L20 18h3l-.6-6H14v3z" fill="white"/>
-      <path d="M20 22v3h3.5l-.4 4.5L20 30.5V34l7-2.1L28 18h-8l.2 4z" fill="#EBEBEB"/>
-    </svg>
-  ),
   Tailwind: (
     <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M20 10c-3.6 0-5.8 1.8-7 5.4 1.4-1.8 3-2.5 4.8-2.1 1 .25 1.78 1.04 2.62 1.9C21.86 16.7 23.54 18.5 27 18.5c3.6 0 5.8-1.8 7-5.4-1.4 1.8-3 2.5-4.8 2.1-1.04-.26-1.78-1.04-2.62-1.9C25.14 11.8 23.46 10 20 10z" fill="#06B6D4"/>
       <path d="M13 21.5c-3.6 0-5.8 1.8-7 5.4 1.4-1.8 3-2.5 4.8-2.1 1.04.26 1.78 1.04 2.62 1.9C14.86 28.2 16.54 30 20 30c3.6 0 5.8-1.8 7-5.4-1.4 1.8-3 2.5-4.8 2.1-1.04-.26-1.78-1.04-2.62-1.9C18.14 23.3 16.46 21.5 13 21.5z" fill="#06B6D4"/>
-    </svg>
-  ),
-  Docker: (
-    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M16 16h4v4h-4z" fill="#2496ED"/>
-      <path d="M21 16h4v4h-4z" fill="#2496ED"/>
-      <path d="M21 11h4v4h-4z" fill="#2496ED"/>
-      <path d="M11 16h4v4h-4z" fill="#2496ED"/>
-      <path d="M16 11h4v4h-4z" fill="#2496ED"/>
-      <path d="M6 20.5c0 5 7 7.5 14.5 7.5S35 26 35 20.5c-1.5.5-2.5.5-4 0-1-3-3-5-6-5H16c-2.5 0-5 2.5-5 4-1-.5-3-.5-5 1z" fill="#2496ED" opacity="0.85"/>
-      <path d="M34 15c0-1.5-1-2-2-2h-1v2h-2v-2h-2v2h-2v-2h-2v2h-4c0 1.5 1 3 2.5 3 0 2-2 4-5 4H8.5C10 26.5 15 28 20 28s11-2.5 11-8c2 0 3-1 3-3v-2z" fill="#2496ED"/>
     </svg>
   ),
   Git: (
@@ -88,133 +93,163 @@ const Icons = {
       <path d="M37.7 18.3L21.7 2.3a2.3 2.3 0 0 0-3.4 0l-3.4 3.4 4.3 4.3a2.8 2.8 0 0 1 3.5 3.5l4.1 4.1a2.8 2.8 0 1 1-1.7 1.6l-3.8-3.8v10a2.8 2.8 0 1 1-2.3 0V14a2.8 2.8 0 0 1-1.5-3.7L13.3 6 2.3 17a2.3 2.3 0 0 0 0 3.3l16 16a2.3 2.3 0 0 0 3.3 0l16-16a2.3 2.3 0 0 0 0-2z" fill="#F05032"/>
     </svg>
   ),
-  AWS: (
-    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12.5 21c-.2.7-.3 1.5-.3 2.2C12.2 26.8 14.8 29 18 29c1 0 2-.2 2.8-.7.9 1.5 2.5 2.5 4.3 2.5 2.7 0 4.9-2.2 4.9-4.9 0-.3 0-.6-.1-.9C31 24 32 22.1 32 20c0-3.3-2.7-6-6-6-.5 0-1 .1-1.4.2C23.5 12.1 21.4 11 19 11c-3.7 0-6.7 3-6.7 6.7 0 1.1.3 2.2.9 3.1L12.5 21z" fill="#FF9900"/>
-      <path d="M13 32l-1.5-1.5 1-1 1 1-1-1z" fill="#FF9900"/>
-      <text x="20" y="22" textAnchor="middle" fill="white" fontSize="7" fontWeight="bold" fontFamily="sans-serif">AWS</text>
-    </svg>
-  ),
 };
 
 const CATEGORIES = [
   {
-    id: 'frontend',
-    title: 'Front-End Mastery',
-    tagline: 'Pixel-perfect, interactive user interfaces.',
-    color: '#61DAFB',
-    skills: [
-      { name: 'React.js', logo: Icons.React },
-      { name: 'JavaScript', logo: Icons.JavaScript },
-      { name: 'HTML5', logo: Icons.HTML5 },
-      { name: 'Tailwind CSS', logo: Icons.Tailwind },
-    ],
-  },
-  {
     id: 'backend',
-    title: 'Back-End & Data',
-    tagline: 'Scalable APIs and robust server logic.',
-    color: '#22c55e',
+    categoryName: 'Java & Backend Architecture',
+    tagline: 'Enterprise Java, Spring Framework, and secure PHP/PDO.',
+    color: '#00f5ff',
     skills: [
-      { name: 'Node.js', logo: Icons.NodeJS },
-      { name: 'PHP', logo: Icons.PHP },
-      { name: 'MySQL', logo: Icons.MySQL },
-      { name: 'Python', logo: Icons.Python },
+      { name: 'Java (OOP & Core)', level: 'Certified', logo: Icons.Java, desc: 'Object-Oriented, Collections, Multi-threading' },
+      { name: 'Spring Framework', level: 'Certified', logo: Icons.Spring, desc: 'Enterprise Java, Dependency Injection, REST' },
+      { name: 'PHP (PDO)', level: 'Advanced', logo: Icons.PHP, desc: 'Secure Prepared Statements, Auth, Custom CMS' },
+      { name: 'Node.js & Express', level: 'Proficient', logo: Icons.NodeJS, desc: 'Microservices & High-Throughput REST APIs' },
     ],
   },
   {
-    id: 'platform',
-    title: 'Cloud & Mobile',
-    tagline: 'Cross-platform apps and secure infrastructure.',
-    color: '#a855f7',
+    id: 'frontend',
+    categoryName: 'Frontend & Mobile',
+    tagline: 'Interactive React.js web apps and Flutter cross-platform mobile.',
+    color: '#10b981',
     skills: [
-      { name: 'Flutter', logo: Icons.Flutter },
-      { name: 'Docker', logo: Icons.Docker },
-      { name: 'AWS', logo: Icons.AWS },
-      { name: 'Git', logo: Icons.Git },
+      { name: 'React.js', level: 'Advanced', logo: Icons.React, desc: 'SPA, Hooks, Responsive State Management' },
+      { name: 'Flutter & Dart', level: 'Advanced', logo: Icons.Flutter, desc: 'Cross-Platform iOS/Android & Offline Sync' },
+      { name: 'JavaScript (ES6+)', level: 'Advanced', logo: Icons.JavaScript, desc: 'Async/Await, DOM APIs, Event Loop' },
+      { name: 'Tailwind & Bootstrap', level: 'Advanced', logo: Icons.Tailwind, desc: 'Responsive UI Design & Modern Tokens' },
+    ],
+  },
+  {
+    id: 'database',
+    categoryName: 'Databases, Cloud & DevOps',
+    tagline: 'Relational & NoSQL schemas, Hostinger VPS & Geo-fencing.',
+    color: '#8b5cf6',
+    skills: [
+      { name: 'MySQL Database', level: 'Advanced', logo: Icons.MySQL, desc: 'Schema Design, Normalization, Query Indexing' },
+      { name: 'MongoDB', level: 'Proficient', logo: Icons.MongoDB, desc: 'Document Models, Aggregations, CRUD' },
+      { name: 'Python', level: 'Certified', logo: Icons.Python, desc: 'Scripting, Automation & Data Processing' },
+      { name: 'Git & GitHub', level: 'Advanced', logo: Icons.Git, desc: 'Version Control, CI/CD, Team Collaboration' },
     ],
   },
 ];
 
 const TOOLS = [
-  'Figma', 'TypeScript', 'Linux VPS', 'Dart', 'Nginx', 'Redis', 'CI/CD', 'Firebase', 'REST APIs', 'Postman',
-  'Figma', 'TypeScript', 'Linux VPS', 'Dart', 'Nginx', 'Redis', 'CI/CD', 'Firebase', 'REST APIs', 'Postman',
+  'Hostinger VPS Deployment', 'Geo-Fencing (Haversine Formula)', 'RESTful APIs & AJAX', 
+  'VS Code & IntelliJ', 'Postman API Testing', 'DataTables Integration', '.htaccess Routing', 
+  'Figma UI Design', 'JSON Schemas & Auth Tokens', 'Linux Bash Scripts'
 ];
 
-const cardVariant = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.23, 1, 0.32, 1] } },
-};
-
 export default function Skills() {
+  const [filter, setFilter] = useState('all');
+
+  const filteredCategories = CATEGORIES.filter(cat => {
+    if (filter === 'all') return true;
+    return cat.id === filter;
+  });
+
   return (
     <section id="skills" className="section skills-section">
       <div className="container">
-        
-        {/* ── Section Header ── */}
+
+        {/* Section Header */}
         <div className="skills-header">
           <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             <span className="label-modern">Technical Arsenal</span>
             <h2 className="display-lg">
-              Next-Gen <span className="animated-gradient-text">Expertise.</span>
+              Full-Stack <span className="animated-gradient-text">Competencies.</span>
             </h2>
           </motion.div>
-          <motion.p className="header-text" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
-            A curated stack of high-performance technologies, moving beyond legacy indicators to focus on actual platform mastery.
+
+          <motion.p className="skills-header-desc" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+            Comprehensive skillset spanning Java Enterprise, PHP/MySQL, MERN Stack, Flutter Mobile, and scalable database schemas.
           </motion.p>
         </div>
 
-        {/* ── 2026 Bento Grid ── */}
-        <div className="bento-grid">
-          {CATEGORIES.map((cat, i) => (
-            <motion.div 
-              key={cat.id} 
-              className="bento-card"
-              variants={cardVariant}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: '-20px' }}
-              transition={{ delay: i * 0.1 }}
+        {/* Category Filter Pills */}
+        <div className="skills-filter-row">
+          {[
+            { id: 'all', label: 'All Disciplines' },
+            { id: 'backend', label: 'Java & Backend' },
+            { id: 'frontend', label: 'Frontend & Mobile' },
+            { id: 'database', label: 'Databases & DevOps' }
+          ].map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setFilter(tab.id)}
+              className={`skills-filter-btn ${filter === tab.id ? 'active' : ''}`}
             >
-              {/* Card Header */}
-              <div className="card-top">
-                <div className="card-indicator" style={{ background: cat.color, boxShadow: `0 0 12px ${cat.color}80` }} />
-                <div>
-                  <h3 className="card-title">{cat.title}</h3>
-                  <p className="card-tagline">{cat.tagline}</p>
-                </div>
-              </div>
-
-              {/* Skill SVG Tiles */}
-              <div className="svg-tiles">
-                {cat.skills.map(skill => (
-                  <div key={skill.name} className="svg-tile">
-                    <div className="svg-icon-wrap" style={{ background: `${cat.color}08`, border: `1px solid ${cat.color}15` }}>
-                      {skill.logo}
-                    </div>
-                    <span className="svg-name">{skill.name}</span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
+              {filter === tab.id && (
+                <motion.div layoutId="skillFilterActive" className="skill-active-bg" />
+              )}
+              <span className="skill-btn-text">{tab.label}</span>
+            </button>
           ))}
         </div>
 
-        {/* ── Additional Tools Ticker ── */}
-        <motion.div 
-          className="tools-ticker-wrap"
+        {/* Bento Grid */}
+        <motion.div layout className="skills-bento-grid">
+          <AnimatePresence mode="popLayout">
+            {filteredCategories.map((cat, i) => (
+              <motion.div
+                key={cat.id}
+                layout
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.45, delay: i * 0.08 }}
+                className="skill-bento-card glass"
+              >
+                {/* Card Top */}
+                <div className="skill-card-top">
+                  <div className="skill-indicator" style={{ background: cat.color, boxShadow: `0 0 14px ${cat.color}` }} />
+                  <div>
+                    <h3 className="skill-cat-title">{cat.categoryName}</h3>
+                    <p className="skill-cat-tagline">{cat.tagline}</p>
+                  </div>
+                </div>
+
+                {/* SVG Tile Grid */}
+                <div className="skill-tiles-grid">
+                  {cat.skills.map(skill => (
+                    <motion.div
+                      key={skill.name}
+                      whileHover={{ scale: 1.04, y: -4 }}
+                      className="skill-tile"
+                    >
+                      <div className="skill-icon-box" style={{ background: `${cat.color}10`, border: `1px solid ${cat.color}25` }}>
+                        {skill.logo}
+                      </div>
+                      <div className="skill-info">
+                        <div className="skill-name-row">
+                          <span className="skill-name">{skill.name}</span>
+                          <span className="skill-level-badge" style={{ color: cat.color }}>{skill.level}</span>
+                        </div>
+                        <span className="skill-desc-text">{skill.desc}</span>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Workflow & Tooling Ticker */}
+        <motion.div
+          className="tools-ticker-card glass"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.2 }}
         >
-          <div className="ticker-eyebrow">Workflow & Tooling</div>
-          <div className="ticker-track-outer">
+          <div className="ticker-label">Specialized Frameworks, APIs & Deployment</div>
+          <div className="ticker-outer">
             <div className="fade-l" /><div className="fade-r" />
-            <div className="ticker-track-inner">
-              <div className="ticker-items">
-                {TOOLS.map((t, i) => (
-                  <span key={i} className="tool-chip">{t}</span>
+            <div className="ticker-scroll-track">
+              <div className="ticker-scroll-inner">
+                {[...TOOLS, ...TOOLS].map((tool, idx) => (
+                  <span key={idx} className="tool-tag">{tool}</span>
                 ))}
               </div>
             </div>
@@ -224,162 +259,238 @@ export default function Skills() {
       </div>
 
       <style>{`
-        /* ── Section Setup ── */
-        .skills-section { 
-          padding: clamp(80px, 12vw, 150px) 0; 
-          background: var(--bg); 
-          position: relative; 
-          overflow: hidden; 
-        }
-        
-        /* Atmospheric Orbs */
-        .skills-section::before {
-          content: ''; position: absolute; top: 0; left: -10%;
-          width: min(800px, 100vw); height: min(800px, 100vw);
-          background: radial-gradient(circle, var(--violet-glow) 0%, transparent 60%);
-          filter: blur(100px); pointer-events: none; z-index: 0;
-        }
-        .skills-section::after {
-          content: ''; position: absolute; bottom: 0; right: -10%;
-          width: min(700px, 90vw); height: min(700px, 90vw);
-          background: radial-gradient(circle, rgba(97,218,251,0.06) 0%, transparent 60%);
-          filter: blur(100px); pointer-events: none; z-index: 0;
+        .skills-section {
+          background: var(--bg);
+          position: relative;
         }
 
-        .container { position: relative; z-index: 1; }
-
-        /* ── Header ── */
         .skills-header {
-          display: flex; justify-content: space-between; align-items: flex-end;
-          margin-bottom: clamp(40px, 6vw, 80px); gap: 30px;
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          margin-bottom: 40px;
+          gap: 30px;
         }
-        .skills-header .display-lg {
-          font-size: clamp(2.5rem, 6vw, 4.5rem) !important;
-          line-height: 1.1; margin-top: 16px;
-        }
-        .header-text {
-          max-width: 450px; color: var(--text-2);
-          font-size: clamp(0.95rem, 1.5vw, 1.1rem); line-height: 1.7;
-          text-align: right; margin-bottom: 8px;
+        .skills-header-desc {
+          max-width: 460px;
+          color: var(--text-2);
+          font-size: 1.02rem;
+          line-height: 1.7;
+          text-align: right;
         }
 
-        /* ── Bento Grid ── */
-        .bento-grid {
+        /* Filter Pills */
+        .skills-filter-row {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 40px;
+          background: var(--surface-2);
+          padding: 6px;
+          border-radius: 100px;
+          border: 1px solid var(--border);
+          width: max-content;
+        }
+        .skills-filter-btn {
+          position: relative;
+          padding: 8px 20px;
+          border: none;
+          background: transparent;
+          color: var(--text-2);
+          font-size: 0.85rem;
+          font-weight: 700;
+          cursor: pointer;
+          border-radius: 100px;
+          transition: color 0.2s;
+        }
+        .skills-filter-btn.active {
+          color: var(--btn-text);
+        }
+        .skill-active-bg {
+          position: absolute;
+          inset: 0;
+          background: var(--cyan);
+          border-radius: 100px;
+          z-index: 0;
+          box-shadow: 0 4px 14px var(--cyan-glow);
+        }
+        .skill-btn-text {
+          position: relative;
+          z-index: 1;
+        }
+
+        /* Bento Grid */
+        .skills-bento-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: clamp(16px, 2vw, 32px);
-          margin-bottom: clamp(16px, 2vw, 32px);
+          gap: 24px;
+          margin-bottom: 32px;
         }
 
-        .bento-card {
-          background: var(--surface);
-          border: 1px solid var(--border);
-          border-radius: clamp(20px, 3vw, 32px);
-          padding: clamp(24px, 3vw, 40px);
-          backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-          display: flex; flex-direction: column; gap: 32px;
-          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s, border-color 0.4s;
-          box-shadow: 0 4px 24px rgba(0,0,0,0.04);
-        }
-        .bento-card:hover {
-          transform: translateY(-8px);
-          border-color: var(--border-2);
-          box-shadow: 0 24px 48px rgba(0,0,0,0.12);
-        }
-
-        .card-top { display: flex; align-items: flex-start; gap: 16px; }
-        .card-indicator {
-          width: 12px; height: 12px; border-radius: 50%;
-          margin-top: 6px; flex-shrink: 0;
-        }
-        .card-title {
-          font-family: 'Outfit', sans-serif;
-          font-size: clamp(1.4rem, 2vw, 1.8rem); font-weight: 800;
-          color: var(--text-1); letter-spacing: -0.01em; margin-bottom: 6px;
-        }
-        .card-tagline { font-size: 0.9rem; color: var(--text-3); line-height: 1.5; }
-
-        /* SVG Tiles */
-        .svg-tiles {
-          display: grid; grid-template-columns: repeat(2, 1fr);
-          gap: clamp(12px, 1.5vw, 20px); margin-top: auto;
-        }
-        .svg-tile {
-          display: flex; flex-direction: column; align-items: center; gap: 12px;
-          padding: 20px 12px;
-          background: var(--surface-2); border-radius: 20px;
-          border: 1px solid transparent;
+        .skill-bento-card {
+          border-radius: 28px;
+          padding: 32px;
+          border: 1px solid var(--border) !important;
+          background: var(--surface) !important;
+          display: flex;
+          flex-direction: column;
+          gap: 28px;
           transition: all 0.3s ease;
         }
-        .bento-card:hover .svg-tile { border-color: var(--border); background: var(--surface-3); }
-        .svg-tile:hover { transform: scale(1.05); }
-        
-        .svg-icon-wrap {
-          width: 56px; height: 56px; border-radius: 16px;
-          display: flex; align-items: center; justify-content: center;
-          padding: 10px; transition: transform 0.3s;
+        .skill-bento-card:hover {
+          border-color: var(--border-cyan) !important;
+          box-shadow: 0 20px 48px rgba(0, 0, 0, 0.3);
         }
-        .svg-tile:hover .svg-icon-wrap { transform: translateY(-4px); }
-        .svg-icon-wrap svg { width: 100%; height: 100%; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
-        .svg-name { font-size: 0.85rem; font-weight: 700; color: var(--text-2); text-align: center; }
 
-        /* ── Ticker ── */
-        .tools-ticker-wrap {
-          background: var(--surface); border: 1px solid var(--border);
-          border-radius: clamp(16px, 2vw, 24px); padding: clamp(20px, 3vw, 32px);
-          backdrop-filter: blur(10px); text-align: center;
+        .skill-card-top {
+          display: flex;
+          align-items: flex-start;
+          gap: 14px;
         }
-        .ticker-eyebrow {
-          font-size: 0.72rem; font-weight: 800; letter-spacing: 0.2em;
-          text-transform: uppercase; color: var(--text-4); margin-bottom: 24px;
+        .skill-indicator {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          margin-top: 6px;
+          flex-shrink: 0;
         }
-        .ticker-track-outer { position: relative; overflow: hidden; }
+        .skill-cat-title {
+          font-family: 'Outfit', sans-serif;
+          font-size: 1.45rem;
+          font-weight: 800;
+          color: var(--text-1);
+          letter-spacing: -0.01em;
+          margin-bottom: 4px;
+        }
+        .skill-cat-tagline {
+          font-size: 0.85rem;
+          color: var(--text-3);
+          line-height: 1.5;
+        }
+
+        /* Tiles Grid */
+        .skill-tiles-grid {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-top: auto;
+        }
+        .skill-tile {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          padding: 14px 16px;
+          background: var(--surface-2);
+          border-radius: 16px;
+          border: 1px solid var(--border);
+          transition: all 0.25s ease;
+        }
+        .skill-tile:hover {
+          background: var(--surface-3);
+          border-color: var(--border-2);
+        }
+
+        .skill-icon-box {
+          width: 46px;
+          height: 46px;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 8px;
+          flex-shrink: 0;
+        }
+        .skill-icon-box svg {
+          width: 100%;
+          height: 100%;
+        }
+
+        .skill-info {
+          flex: 1;
+          min-width: 0;
+        }
+        .skill-name-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 3px;
+        }
+        .skill-name {
+          font-size: 0.92rem;
+          font-weight: 700;
+          color: var(--text-1);
+        }
+        .skill-level-badge {
+          font-size: 0.65rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+        }
+        .skill-desc-text {
+          font-size: 0.76rem;
+          color: var(--text-3);
+          display: block;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        /* Tools Ticker */
+        .tools-ticker-card {
+          border-radius: 20px;
+          padding: 24px 32px;
+          border: 1px solid var(--border) !important;
+          background: var(--surface) !important;
+          text-align: center;
+        }
+        .ticker-label {
+          font-size: 0.72rem;
+          font-weight: 800;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: var(--cyan);
+          margin-bottom: 18px;
+        }
+        .ticker-outer { position: relative; overflow: hidden; }
         .fade-l, .fade-r {
-          position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
+          position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2; pointer-events: none;
         }
-        .fade-l { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
-        .fade-r { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
-        .ticker-track-inner { overflow: hidden; }
-        .ticker-items {
-          display: flex; gap: 16px; width: max-content;
-          animation: slide 35s linear infinite;
-        }
-        .tool-chip {
-          padding: 10px 24px; border-radius: 12px;
-          background: var(--surface-2); border: 1px solid var(--border);
-          font-size: 0.9rem; font-weight: 700; color: var(--text-2); white-space: nowrap;
-          transition: all 0.3s;
-        }
-        .tools-ticker-wrap:hover .tool-chip { border-color: var(--border-2); color: var(--text-1); }
+        .fade-l { left: 0; background: linear-gradient(to right, var(--bg-card), transparent); }
+        .fade-r { right: 0; background: linear-gradient(to left, var(--bg-card), transparent); }
 
-        @keyframes slide {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+        .ticker-scroll-track { overflow: hidden; }
+        .ticker-scroll-inner {
+          display: flex;
+          gap: 12px;
+          width: max-content;
+          animation: ticker-scroll 32s linear infinite;
+        }
+        .tool-tag {
+          padding: 8px 18px;
+          border-radius: 10px;
+          background: var(--surface-2);
+          border: 1px solid var(--border);
+          font-size: 0.85rem;
+          font-weight: 700;
+          color: var(--text-2);
+          white-space: nowrap;
+          transition: all 0.2s;
+        }
+        .tool-tag:hover {
+          border-color: var(--cyan);
+          color: var(--cyan);
         }
 
-        /* ── Responsive ── */
-        @media (max-width: 1024px) {
-          .bento-grid { grid-template-columns: repeat(2, 1fr); }
-          .bento-card:last-child { grid-column: 1 / -1; }
+        @media (max-width: 1100px) {
+          .skills-bento-grid { grid-template-columns: 1fr 1fr; }
         }
-        @media (max-width: 900px) {
-          .skills-header { flex-direction: column; align-items: flex-start; gap: 20px; text-align: left; }
-          .header-text { text-align: left; }
-        }
-        @media (max-width: 768px) {
-          .skills-section { padding: 80px 0; }
-          .bento-grid { grid-template-columns: 1fr; gap: 20px; }
-          .bento-card:last-child { grid-column: auto; }
-          .svg-tiles { gap: 12px; }
-        }
-        @media (max-width: 480px) {
-          .skills-section { padding: 60px 0; }
-          .skills-header { margin-bottom: 40px; }
-          .bento-card { padding: 24px; gap: 24px; border-radius: 24px; }
-          .svg-tile { padding: 16px 12px; border-radius: 16px; }
-          .svg-icon-wrap { width: 48px; height: 48px; }
-          .fade-l, .fade-r { width: 40px; }
-          .tool-chip { padding: 8px 16px; font-size: 0.8rem; }
+
+        @media (max-width: 800px) {
+          .skills-header { flex-direction: column; align-items: flex-start; text-align: left; }
+          .skills-header-desc { text-align: left; }
+          .skills-bento-grid { grid-template-columns: 1fr; }
+          .skills-filter-row { width: 100%; flex-wrap: wrap; border-radius: 16px; }
+          .skills-filter-btn { flex: 1 1 calc(50% - 6px); text-align: center; }
         }
       `}</style>
     </section>
